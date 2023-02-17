@@ -7,12 +7,15 @@ import com.apresentation.use.services.CategoryService
 import org.springframework.stereotype.Service
 import com.apresentation.use.dtos.ProductDto
 import com.apresentation.use.entities.Product
+import org.slf4j.LoggerFactory
 
 @Service
 class CategoryServiceImpl(
     private val categoryRepository: CategoryRepository,
     private val productRepository: ProductRepository,
+
 ): CategoryService {
+    val LOGGER = LoggerFactory.getLogger(ProductServiceImpl::class.java)
     override fun getAllCategories(): List<Category> {
         return categoryRepository.findAll()
     }
@@ -34,6 +37,13 @@ class CategoryServiceImpl(
 
 
     override fun createCategory(category: Category): Category {
-        return categoryRepository.save(category)
+        try {
+            val savedCategory = productRepository.save(category)
+            LOGGER.info("Category created with id ${savedCategory.id}")
+            return savedCategory
+        } catch (ex: Exception) {
+            LOGGER.error("Error creating category: ${ex.message}", ex)
+            throw ex
+        }
     }
 }

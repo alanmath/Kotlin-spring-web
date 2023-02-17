@@ -22,9 +22,15 @@ class ProductServiceImpl(
 
 
     override fun create(product: Product): Product {
-        return productRepository.save(product)
+        try {
+            val savedProduct = productRepository.save(product)
+            LOGGER.info("Product created with id ${savedProduct.id}")
+            return savedProduct
+        } catch (ex: Exception) {
+            LOGGER.error("Error creating product: ${ex.message}", ex)
+            throw ex
+        }
     }
-
 
     override fun update(id: Long, product: Product): Product {
 
