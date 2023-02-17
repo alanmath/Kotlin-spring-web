@@ -38,7 +38,7 @@ class CategoryServiceImpl(
 
     override fun createCategory(category: Category): Category {
         try {
-            val savedCategory = productRepository.save(category)
+            val savedCategory = categoryRepository.save(category)
             LOGGER.info("Category created with id ${savedCategory.id}")
             return savedCategory
         } catch (ex: Exception) {
