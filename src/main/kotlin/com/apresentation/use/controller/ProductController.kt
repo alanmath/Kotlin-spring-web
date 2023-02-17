@@ -1,6 +1,6 @@
 package com.apresentation.use.controller
 
-import com.apresentation.use.ProductService
+import com.apresentation.use.services.ProductService
 import com.apresentation.use.entities.Product
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType

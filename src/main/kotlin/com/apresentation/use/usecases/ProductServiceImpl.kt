@@ -1,4 +1,6 @@
-package com.apresentation.use
+package com.apresentation.use.usecases
+import com.apresentation.use.repositories.ProductRepository
+import com.apresentation.use.services.ProductService
 import com.apresentation.use.entities.Product
 import org.slf4j.LoggerFactory
 import org.springframework.data.crossstore.ChangeSetPersister
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service
 @Service
 class ProductServiceImpl(
     private val productRepository: ProductRepository
-) : ProductService{
+) : ProductService {
     val LOGGER = LoggerFactory.getLogger(ProductServiceImpl::class.java)
     override fun getAll(): List<Product> = productRepository.findAll()
 
