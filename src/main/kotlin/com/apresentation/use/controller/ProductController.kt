@@ -1,7 +1,9 @@
 package com.apresentation.use.controller
 
+import com.apresentation.use.dtos.ProductDto
 import com.apresentation.use.services.ProductService
 import com.apresentation.use.entities.Product
+import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/products")
+@Api(value = "API do Produto")
 class ProductController(private val productService: ProductService) {
 
     @GetMapping(produces = [MediaType.APPLICATION_JSON_VALUE])
@@ -23,7 +26,7 @@ class ProductController(private val productService: ProductService) {
     }
 
     @PostMapping(consumes = [MediaType.APPLICATION_JSON_VALUE], produces = [MediaType.APPLICATION_JSON_VALUE])
-    fun save(@RequestBody product: Product): ResponseEntity<Product> {
+    fun save(@RequestBody product: Product): ResponseEntity<ProductDto> {
         val savedProduct = productService.create(product)
         return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct)
     }

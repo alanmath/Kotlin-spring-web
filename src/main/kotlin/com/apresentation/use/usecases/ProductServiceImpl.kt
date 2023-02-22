@@ -1,7 +1,9 @@
 package com.apresentation.use.usecases
+import com.apresentation.use.dtos.ProductDto
 import com.apresentation.use.repositories.ProductRepository
 import com.apresentation.use.services.ProductService
 import com.apresentation.use.entities.Product
+import com.apresentation.use.services.exceptions.ProductAlreadyExistsException
 import org.slf4j.LoggerFactory
 import org.springframework.data.crossstore.ChangeSetPersister
 import org.springframework.stereotype.Service
@@ -21,14 +23,22 @@ class ProductServiceImpl(
     override fun getById(id: Long): Product = productRepository.findById(id).orElseThrow { ChangeSetPersister.NotFoundException() }
 
 
-    override fun create(product: Product): Product {
-        try {
-            val savedProduct = productRepository.save(product)
-            LOGGER.info("Product created with id ${savedProduct.id}")
-            return savedProduct
-        } catch (ex: Exception) {
-            LOGGER.error("Error creating product: ${ex.message}", ex)
-            throw ex
+    override fun create(product: Product): ProductDto {
+        LOGGER.info("----------------------------------------")
+        val existingProduct = productRepository.findByName(product.name)
+        LOGGER.info("----------------------------------------")
+        LOGGER.info("${existingProduct} ----------------------------------------")
+        if (existingProduct != null) {
+            LOGGER.info("Ele esta dando exceção?")
+            throw ProductAlreadyExistsException()
+        } else{
+            LOGGER.info("Passou aqui!")
+            val createdProduct = productRepository.save(product)
+            return ProductDto(
+                name = createdProduct.name ?: "sem nome",
+                description = createdProduct.description,
+                category = createdProduct.category?.name ?: "sem categoria"
+            )
         }
     }
 

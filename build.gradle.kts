@@ -35,6 +35,11 @@ dependencies {
 	runtimeOnly ("mysql:mysql-connector-java")
 
 
+	// swagger
+	implementation ("io.springfox:springfox-swagger2:3.0.0")
+	implementation ("io.springfox:springfox-swagger-ui:3.0.0")
+
+
 }
 
 tasks.withType<KotlinCompile> {

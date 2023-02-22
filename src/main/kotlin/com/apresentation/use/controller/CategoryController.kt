@@ -5,6 +5,7 @@ package com.apresentation.use.controller
 import com.apresentation.use.dtos.ProductDto
 import com.apresentation.use.entities.Category
 import com.apresentation.use.services.CategoryService
+import io.swagger.annotations.Api
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/categories")
+@Api(value = "API da categoria")
 class CategoryController(
                          private val categoryService: CategoryService
 ) {
